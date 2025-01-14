@@ -1,4 +1,3 @@
-Detection Tool
 A Python-based tool for monitoring and analyzing the online reputation of a business. It identifies potential data breaches, leaked credentials, and suspicious activity by leveraging public databases, scraping relevant platforms, and performing sentiment analysis on online mentions.
 
 ✨ Features
