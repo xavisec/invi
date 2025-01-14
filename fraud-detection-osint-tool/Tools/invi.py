@@ -9,21 +9,32 @@ load_dotenv()
 API_KEY = os.getenv("HIBP_API_KEY")
 BASE_URL = "https://haveibeenpwned.com/api/v3"
 
-def check_breach(account):
-    url = f"{BASE_URL}/breachedaccount/{account}"
+
+def get_breached_data(account):
+    url = f"{BASE_URL}/breachedaccount/{account}?truncateResponse=false"
     headers = {
         "hibp-api-key": API_KEY,
         "User-Agent": "PythonApp"  # Required by HIBP API
     }
     response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return response.json()  # List of breaches
-    elif response.status_code == 404:
-        return f"No breaches found for {account}"
-    else:
-        return f"Error: {response.status_code} - {response.text}"
 
-# Test the function
-email = "test@example.com"
-result = check_breach(email)
-print(result)
+    if response.status_code == 200:
+        breaches = response.json()
+        for breach in breaches:
+            print(f"Name: {breach.get('Name', 'N/A')}")
+            print(f"Title: {breach.get('Title', 'N/A')}")
+            print(f"Domain: {breach.get('Domain', 'N/A')}")
+            print(f"Breach Date: {breach.get('BreachDate', 'N/A')}")
+            print(f"Description: {breach.get('Description', 'N/A')}")
+            print(f"Compromised Data: {', '.join(breach.get('DataClasses', []))}")
+            print(f"PwnCount: {breach.get('PwnCount', 'N/A')}")
+            print("-" * 40)
+    elif response.status_code == 404:
+        print(f"No breaches found for {account}")
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+
+
+# Replace it with the account
+email = "example"
+get_breached_data(email)
