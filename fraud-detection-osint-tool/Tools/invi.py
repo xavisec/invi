@@ -87,7 +87,7 @@ def generate_pdf_report(df, summary, account):
                      max_width * 0.4]  # Data Classes
 
     # Prepare table data with text wrapping for 'Data Classes'
-    data = [['Name', 'Breach Date', 'Verified', 'Data Classes']]
+    data = [['Name', 'Breach Date', 'IVerified', 'Data Classes']]
     for _, row in df.iterrows():
         data.append([
             Paragraph(row['Name'], styles['BodyText']),
